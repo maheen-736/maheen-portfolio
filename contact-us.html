@@ -107,6 +107,163 @@
       background: var(--red-accent);
       border-radius: 50%;
     }
+    /* Navigation */
+nav {
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+nav.scrolled {
+    padding: 10px 0;
+    background-color: rgba(20, 20, 20, 0.95);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    color: var(--text-light);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--red-accent);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    position: relative;
+    transition: var(--transition);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--red-accent);
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--red-accent);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Mobile Navigation */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    z-index: 101;
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: rgba(28, 28, 28, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    transition: var(--transition);
+    padding: 80px 20px 20px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-nav.active {
+    right: 0;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.mobile-nav-links a:hover {
+    color: var(--red-accent);
+    padding-left: 15px;
+}
+
+.mobile-nav-links i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+}
 
     /* Popup */
     #popup {
@@ -476,17 +633,40 @@
   </div>
 
   <!-- Navigation -->
-  <nav id="mainNav">
-    <ul>
+  <!-- Navigation Bar -->
+<nav id="mainNav">
+  <div class="nav-container">
+      <a href="index.html" class="logo">ACE <span>Consultants</span></a>
+      
+      <ul class="nav-links">
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a></li>
+          <li><a href="countries.html"><i class="fas fa-globe"></i> Countries</a></li>
+          <li><a href="ielts.html"><i class="fas fa-language"></i> IELTSIFY</a></li>
+          <li><a href="about-us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="contact-us.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+          <li><a href="blogs.html"><i class="fas fa-blog"></i> Blogs</a></li>
+      </ul>
+      
+      <button class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+      </button>
+  </div>
+</nav>
+
+<!-- Mobile Navigation -->
+<div class="overlay" id="overlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <ul class="mobile-nav-links">
       <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a></li>
       <li><a href="countries.html"><i class="fas fa-globe"></i> Countries</a></li>
-      <li><a href="ielts.html"><i class="fas fa-language"></i>  IELTSIFY</a></li>
+      <li><a href="ielts.html"><i class="fas fa-language"></i> IELTSIFY</a></li>
       <li><a href="about-us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
       <li><a href="contact-us.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
       <li><a href="blogs.html"><i class="fas fa-blog"></i> Blogs</a></li>
-    </ul>
-  </nav>
+  </ul>
+</div>
 
   <!-- Main Content -->
   <section id="contact-us">
@@ -602,6 +782,38 @@
         behavior: 'smooth'
       });
     }
+
+    // Mobile navigation toggle
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+const overlay = document.getElementById('overlay');
+
+hamburger.addEventListener('click', () => {
+    mobileNav.classList.toggle('active');
+    overlay.classList.toggle('active');
+    // Change hamburger icon based on state
+    if (mobileNav.classList.contains('active')) {
+        hamburger.innerHTML = '<i class="fas fa-times"></i>';
+    } else {
+        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+});
+
+// Close mobile nav when clicking overlay
+overlay.addEventListener('click', () => {
+    mobileNav.classList.remove('active');
+    overlay.classList.remove('active');
+    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+});
+
+// Close mobile nav when clicking a link
+document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+});
   </script>
 </body>
 </html>
