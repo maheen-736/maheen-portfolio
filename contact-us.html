@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact ACE Consultants - Book Your Appointment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #111;
+      --red-accent: #c0392b;
+      --red-accent-light: #e74c3c;
+      --text-light: #f0f0f0;
+      --text-muted: #ccc;
+      --nav-bg: rgba(26, 26, 26, 0.9);
+      --card-bg: #1c1c1c;
+      --glow-effect: 0 0 10px rgba(231, 76, 60, 0.5);
+    }
+
+    * {
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(231, 76, 60, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(231, 76, 60, 0.1) 0%, transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: var(--nav-bg);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled {
+      padding: 10px 0;
+      background-color: rgba(20, 20, 20, 0.98);
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 15px;
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 50px;
+    }
+    nav a i {
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--red-accent);
+      background: rgba(192, 57, 43, 0.1);
+    }
+    nav a:hover i {
+      transform: scale(1.2);
+    }
+    nav a.active {
+      color: var(--red-accent);
+      background: rgba(192, 57, 43, 0.2);
+    }
+    nav a.active::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background: var(--red-accent);
+      border-radius: 50%;
+    }
+
+    /* Popup */
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: linear-gradient(135deg, var(--card-bg), #222);
+      color: var(--text-light);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid var(--red-accent);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: none;
+    }
+    #popup.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    #popup h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: var(--red-accent);
+    }
+    .popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.2rem;
+    }
+    .popup-close:hover {
+      background: var(--red-accent);
+      transform: rotate(90deg);
+    }
+
+    /* Main Content Sections */
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color: var(--red-accent);
+      margin-bottom: 30px;
+      position: relative;
+    }
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2.2rem;
+      padding-bottom: 15px;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red-accent), transparent);
+    }
+    p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      line-height: 1.8;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 150px 20px 80px;
+      position: relative;
+    }
+    .hero img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+
+    /* Form Section */
+    .show-form-button {
+      background: linear-gradient(135deg, var(--red-accent), var(--red-accent-light));
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      margin: 40px auto;
+      display: block;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(192, 57, 43, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .show-form-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(192, 57, 43, 0.6);
+    }
+    .show-form-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    .show-form-button:hover::after {
+      left: 100%;
+    }
+
+    .google-form {
+      display: none;
+      margin: 60px auto;
+      animation: fadeIn 0.7s ease;
+    }
+    iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Location Section */
+    .location {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 50px;
+      margin: 80px 0;
+      border-left: 5px solid var(--red-accent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .location::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(231, 76, 60, 0.1), transparent 70%);
+      z-index: 0;
+    }
+    .location iframe {
+      width: 100%;
+      height: 400px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+
+    /* Contact Info Section */
+    .contact-info {
+      text-align: center;
+      position: relative;
+    }
+    .contact-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(231, 76, 60, 0.05), transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--red-accent), var(--red-accent-light));
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border-radius: 50px;
+      margin: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(192, 57, 43, 0.4);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(192, 57, 43, 0.6);
+    }
+    .cta-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    .cta-button:hover::after {
+      left: 100%;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to bottom, #0a0a0a, #000);
+      padding: 70px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, var(--red-accent), transparent);
+    }
+    footer a {
+      color: var(--red-accent);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Floating Buttons */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      z-index: 99;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .map-float {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      background-color: #4285F4;
+      color: white;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      z-index: 99;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .map-float:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Animations */
+    .hero, .intro, .location, .contact-info {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s forwards;
+    }
+    .hero { animation-delay: 0.2s; }
+    .intro { animation-delay: 0.4s; }
+    .location { animation-delay: 0.6s; }
+    .contact-info { animation-delay: 0.8s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      nav ul {
+        gap: 10px;
+      }
+      .location {
+        padding: 30px;
+      }
+      .whatsapp-float, .map-float {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+      }
+      .map-float {
+        bottom: 90px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      nav ul {
+        gap: 5px;
+        font-size: 0.8rem;
+      }
+      .cta-button {
+        display: block;
+        margin: 15px auto;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Pop-Up -->
+  <div id="popup">
+    <button class="popup-close" id="popupCloseBtn">&times;</button>
+    <h2>Welcome to ACE Consultants – Ready to Take the Next Step?</h2>
+    <p>Book your appointment today and get <strong>20% off</strong> your first consultation!</p>
+    <button class="show-form-button" onclick="showForm()">Book Now</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="mainNav">
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a></li>
+      <li><a href="countries.html"><i class="fas fa-globe"></i> Countries</a></li>
+      <li><a href="ielts.html"><i class="fas fa-language"></i>  IELTSIFY</a></li>
+      <li><a href="about-us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="contact-us.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+      <li><a href="blogs.html"><i class="fas fa-blog"></i> Blogs</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <section id="contact-us">
+    <div class="hero">
+      <h1>Contact ACE Consultants</h1>
+      <p>Book Your Appointment Today and Start Your Journey to Success!</p>
+    </div>
+
+    <div class="intro">
+      <h2>Get In Touch with Us</h2>
+      <p>We provide personalized attention and expert guidance for study abroad, IELTS, and immigration. Let us help you build your future!</p>
+      <p>Fill out the form below to book your appointment with our consultants.</p>
+    </div>
+
+    <button class="show-form-button" onclick="showForm()">
+      <i class="fas fa-calendar-check"></i> Click to Book Appointment
+    </button>
+
+    <div class="google-form" id="googleFormContainer">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScLdCCnSvwRs4kd0isxeEslwq84OSnVTLxAPV98ng6f9mZ3OA/viewform?usp=header"></iframe>
+    </div>
+
+    <div class="location">
+      <h2><i class="fas fa-map-marker-alt"></i> Visit Us at Our Office</h2>
+      <p>Open Monday to Friday, 10AM to 7 PM</p>
+      <p><strong>Address:</strong> 3rd Floor, Abdullah Plaza, Commercial Market, Chaklala Scheme 3</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.76084560569!2d73.0864095748583!3d33.585558173336274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfed9fc6639553%3A0xb5539e8a9e72a12a!2sAce%20Consultants!5e0!3m2!1sen!2s!4v1744237861172!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>" </iframe>
+    </div>
+  </section>
+  
+
+  <!-- Footer -->
+  <footer>
+    <div class="contact-info">
+      <h2><i class="fas fa-address-card"></i> Contact Info</h2>
+      <p><strong><i class="fas fa-phone"></i> Phone:</strong> +92 335 8554590</p>
+      <p><strong><i class="fas fa-envelope"></i> Email:</strong> info@aceconsultants.com</p>
+      <p><strong><i class="fas fa-globe"></i> Website:</strong> <a href="index.html">www.aceconsultants.com</a></p>
+      <div>
+        <a href="tel:+923358554590" class="cta-button"><i class="fas fa-phone"></i> Call Us</a>
+        <a href="acexieltsify@gmail.com" class="cta-button"><i class="fas fa-envelope"></i> Email Us</a>
+      </div>
+    </div>
+    <p>&copy; 2025 ACE Consultants. All Rights Reserved.</p>
+    <p>
+      <a href="privacy.html">Privacy Policy</a> | 
+      <a href="terms.html">Terms of Service</a>
+    </p>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/923358554590" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i> WhatsApp Us
+  </a>
+
+  <!-- Google Map Floating Button -->
+   
+  <a href="https://maps.app.goo.gl/9igXr9iQdXYnnjos9" target="_blank" class="map-float">
+    <i class="fas fa-map-marked-alt"></i> View Map
+  </a>
+
+  <script>
+    // Show popup after 3 seconds
+    setTimeout(() => {
+      const popup = document.getElementById('popup');
+      popup.style.display = 'block';
+      setTimeout(() => {
+        popup.classList.add('show');
+      }, 10);
+    }, 3000);
+    
+    // Close popup when X button is clicked
+    document.getElementById('popupCloseBtn').addEventListener('click', () => {
+      const popup = document.getElementById('popup');
+      popup.classList.remove('show');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 500);
+    });
+    
+    // Close popup when clicking outside
+    window.addEventListener('click', (e) => {
+      const popup = document.getElementById('popup');
+      if (e.target === popup) {
+        popup.classList.remove('show');
+        setTimeout(() => {
+          popup.style.display = 'none';
+        }, 500);
+      }
+    });
+
+    // Navigation scroll effect
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Show form function
+    function showForm() {
+      document.getElementById('googleFormContainer').style.display = 'block';
+      // Close popup if open
+      const popup = document.getElementById('popup');
+      popup.classList.remove('show');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 500);
+      // Scroll to form
+      document.getElementById('googleFormContainer').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>

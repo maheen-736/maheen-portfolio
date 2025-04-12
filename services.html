@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore premium services from ACE Consultants - Study Visa, Immigration, Scholarships, and IELTS preparation with 5+ years expertise">
+    <title>Our Services - ACE Consultants</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #111;
+            --red-accent: #c0392b;
+            --red-accent-light: #e74c3c;
+            --text-light: #f0f0f0;
+            --text-muted: #aaa;
+            --card-bg: #1c1c1c;
+            --heading-color: #e74c3c;
+            --section-spacing: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Animated Navigation */
+        nav {
+            background: rgba(26, 26, 26, 0.9);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            color: var(--red-accent);
+            background: rgba(192, 57, 43, 0.1);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--red-accent);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Services Header */
+        .services-header {
+            text-align: center;
+            padding: 100px 20px 60px;
+            background: linear-gradient(rgba(28, 28, 28, 0.9), rgba(28, 28, 28, 0.95)), 
+                        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            position: relative;
+        }
+
+        .services-header h1 {
+            font-size: 3rem;
+            color: var(--heading-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .services-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Service Buttons - Interactive Grid */
+        .service-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-btn {
+            background: var(--card-bg);
+            color: var(--text-light);
+            padding: 25px 15px;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .service-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--red-accent), var(--red-accent-light));
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.4);
+            border-color: var(--red-accent);
+        }
+
+        .service-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Service Details - Animated Cards */
+        .service-detail {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1000px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--red-accent);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .service-detail.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-detail h2 {
+            color: var(--heading-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .service-detail h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--red-accent);
+        }
+
+        .service-detail p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .service-detail a {
+            color: var(--red-accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-detail a:hover {
+            color: var(--red-accent-light);
+            transform: translateX(5px);
+        }
+
+        .service-detail a i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .service-detail a:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: #0a0a0a;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--red-accent), transparent);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .service-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .service-detail {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-header h1 {
+                font-size: 2rem;
+            }
+            
+            .service-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+           
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a></li>
+            <li><a href="countries.html"><i class="fas fa-globe"></i> Countries</a></li>
+            <li><a href="ielts.html"><i class="fas fa-language"></i>  IELTSIFY</a></li>
+            <li><a href="about-us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="contact-us.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+            <li><a href="blogs.html"><i class="fas fa-blog"></i> Blogs</a></li>
+        </ul>
+    </nav>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="services-header">
+            <h1>Our Premium Services</h1>
+            <p>Unlock global opportunities with ACE Consultants - Your trusted partner for Study Visas, Immigration, Scholarships, and IELTS success</p>
+        </div>
+
+        <!-- Service Buttons Grid -->
+        <div class="service-buttons">
+            <a href="#study-visa" class="service-btn">
+                <i class="fas fa-graduation-cap"></i> Study Visa
+            </a>
+            <a href="#immigration-visa" class="service-btn">
+                <i class="fas fa-passport"></i> Immigration Visa
+            </a>
+            <a href="#scholarship" class="service-btn">
+                <i class="fas fa-trophy"></i> Scholarship
+            </a>
+            <a href="#ielts" class="service-btn">
+                <i class="fas fa-language"></i> IELTS Preparation
+            </a>
+        </div>
+
+        <!-- Service Details -->
+        <div id="study-visa" class="service-detail">
+            <h2><i class="fas fa-graduation-cap"></i> Study Visa Assistance</h2>
+            <p>Our expert team navigates the complex world of international education to secure your study visa for top destinations including the USA, UK, Canada, Australia, and Europe. We provide end-to-end support from university selection to visa approval.</p>
+            <p><strong>Key Features:</strong> University shortlisting, application processing, SOP guidance, financial documentation, interview preparation, and post-approval support.</p>
+            <p><a href="study-visa-details.html">Explore Study Visa Options <i class="fas fa-arrow-right"></i></a></p>
+        </div>
+
+        <div id="immigration-visa" class="service-detail">
+            <h2><i class="fas fa-passport"></i> Immigration Visa Solutions</h2>
+            <p>Begin your new life abroad with our comprehensive immigration services. We specialize in skilled migration, family sponsorship, and investor visas for countries with the most favorable immigration policies.</p>
+            <p><strong>Our Process:</strong> Eligibility assessment, documentation preparation, application filing, interview coaching, and settlement guidance to ensure your smooth transition.</p>
+            <p><a href="immigration-visa-details.html">Start Your Immigration Journey <i class="fas fa-arrow-right"></i></a></p>
+        </div>
+
+        <div id="scholarship" class="service-detail">
+            <h2><i class="fas fa-trophy"></i> Scholarship Assistance</h2>
+            <p>Discover funding opportunities that make international education affordable. We identify scholarships matching your profile and craft compelling applications to maximize your chances of success.</p>
+            <p><strong>We Cover:</strong> Government scholarships, university-specific awards, private funding, and need-based financial aid for undergraduate, graduate, and PhD programs worldwide.</p>
+            <p><a href="scholarship-details.html">Find Scholarships For You <i class="fas fa-arrow-right"></i></a></p>
+        </div>
+
+    
+        <div id="ielts" class="service-detail">
+            <h2><i class="fas fa-language"></i> IELTS Excellence Program</h2>
+            <p>Achieve your target band score with our proven IELTS preparation system. Our 5+ years of expertise has helped hundreds of students secure scores needed for visas and top universities.</p>
+            <p><strong>Program Includes:</strong> Diagnostic testing, personalized coaching, mock exams with detailed feedback, speaking practice with experts, and time management strategies.</p>
+            <p><a href="ielts.html">Boost Your IELTS Score <i class="fas fa-arrow-right"></i></a></p>
+        </div>
+        
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ACE Consultants. All Rights Reserved.</p>
+        <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </footer>
+
+    <!-- JavaScript Magic -->
+    <script>
+        // Animate service details on scroll
+        const serviceDetails = document.querySelectorAll('.service-detail');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        serviceDetails.forEach(detail => {
+            observer.observe(detail);
+        });
+
+        // Smooth scrolling for service buttons
+        document.querySelectorAll('.service-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+
+                // Pulse animation for the target section
+                targetElement.style.animation = 'none';
+                setTimeout(() => {
+                    targetElement.style.animation = 'pulse 1.5s ease';
+                }, 10);
+            });
+        });
+
+        // Add pulse animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.4); }
+                70% { box-shadow: 0 0 0 15px rgba(192, 57, 43, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
